@@ -7,6 +7,9 @@ from marshmallow import EXCLUDE, Schema
 Provide models for various data objects required throughout script.
 Using classes rather than raw dicts allows for better intellisense & typechecking
 Stay DRY by using marshmallow_dataclass instead of vanilla marshmallow
+
+Models assume that the values of options are either strings or floats.
+Not specified in project briefing.
 """
 
 

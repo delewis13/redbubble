@@ -13,6 +13,9 @@ class CartCalculator:
     """
 
     def __init__(self, cart_file_path: str, base_price_file_path: str):
+        """
+        Read in JSON files
+        """
         with open(cart_file_path, "r") as cart_file:
             cart_dict = json.load(cart_file)
 
@@ -28,9 +31,10 @@ class CartCalculator:
 
     def get_options_order(self) -> Dict[str, List[str]]:
         """
-        Creates a dictionary where keys are product_types, and values are the list of option keys
-        This list of option key creates an ordering or options, which can be used to uniquely identify products
-        as `{product_type}_{option_1_key}_..._{option_n_key}`
+        Return a dictionary where keys are product_types, and values a list of option keys
+        This list of option keys is used as an ordering of options, which is used to generate
+        keys to uniquely identify individual products & associated options
+        as `{product_type}_{option_1_value}_..._{option_n_value}`
         """
         options_order: Dict[str, List[str]] = {}
         for base_price in self.base_prices:
@@ -48,6 +52,7 @@ class CartCalculator:
     def get_item_key(self, item: Item) -> str:
         """
         Constructs a key to uniquely refer to item based on selected options
+        Takes the form: `{product_type}_{option_1_value}_..._{option_n_value}`
         """
         if not self.options_order:
             raise Exception("Must call get_options_order first")
@@ -79,16 +84,17 @@ class CartCalculator:
             product_type = base_price.product_type
             ordered_options = self.options_order[product_type]
 
-            # Construct a list of lists, where each sub-list contains all
-            # the option values for a given option type at the current base_price
+            # Each sub-list contains all the option values for a given option type for the current base_price
             option_values: List[List[Union[str, float]]] = [[product_type]]
             for option in ordered_options:
                 option_values.append(base_price.options[option])
 
-            # The various permutations of option_values then gives all the possible
+            # The various permutations of option_values give all the possible
             # combinations of options for the current base_price
             keys_list = itertools.product(*option_values)
 
+            # Each of these permutations forms it's own unique key that is used for the O(1) access time
+            # when later calculating cost of cart
             for key_list in keys_list:
                 key = "_".join(str(key) for key in key_list)
                 prices[key] = base_price.base_price
