@@ -1,4 +1,4 @@
-from typing import Any, ClassVar, Dict, Type
+from typing import ClassVar, Dict, List, Type, Union
 
 import marshmallow_dataclass
 from marshmallow import EXCLUDE, Schema
@@ -40,7 +40,7 @@ class Item:
     """
 
     product_type: str
-    options: Dict[str, Any]
+    options: Dict[str, Union[str, float]]
     artist_markup: int
     quantity: int
     Schema: ClassVar[Type[Schema]] = Schema
@@ -53,6 +53,6 @@ class BasePrice:
     """
 
     product_type: str
-    options: Dict[str, Any]
+    options: Dict[str, List[Union[str, float]]]
     base_price: int
     Schema: ClassVar[Type[Schema]] = Schema

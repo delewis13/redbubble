@@ -1,10 +1,9 @@
 import json
-from typing import List
 
 import marshmallow
 import pytest
 
-from .constants import example_carts
+from .constants import EXAMPLE_BASE_PRICES_PATH, EXAMPLE_CARTS
 from .models import BasePrice, Item
 
 item_valid = {
@@ -66,7 +65,7 @@ class TestItem:
         Check that all example carts can be successfully loaded
         Throws validation error if any carts fail to load
         """
-        for file_name in example_carts:
+        for file_name in EXAMPLE_CARTS:
             with open(f"examples/{file_name}", "r") as f:
                 cart = json.load(f)
 
@@ -131,7 +130,7 @@ class TestBasePrice:
         """
         Check that all example base-prices can be loaded
         """
-        with open(f"examples/base-prices.json", "r") as f:
+        with open(EXAMPLE_BASE_PRICES_PATH, "r") as f:
             base_prices = json.load(f)
 
         BasePrice.Schema(many=True).load(base_prices)
