@@ -1,7 +1,6 @@
 env
 .pytest_cache
 .ipynb_checkpoints
-htmlcov
-report.html
 .coverage
 __pycache__
+.mypy_cache
