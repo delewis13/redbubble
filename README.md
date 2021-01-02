@@ -18,7 +18,7 @@ If you wish to perform dev activities (e.g. running test cases / linting / forma
 
 `pytest` is used for testing.
 
-- run via `pytest` in the terminal
+- run via `pytest` in the terminal (must have installed `requirements_dev.txt`)
 - check coverage via `pytest --cov=src` for terminal report, or `pytest --cov-report html --cov=src` for HTML report [see htmlcov/index.html]
 - check general test report via `pytest --html=report.html --self-contained-html` [see report.html]
 - test coverage is 100%.
@@ -44,7 +44,7 @@ It was assumed that all "option values" are either strings or floats.
 VSCode settings have been included in the repo and include the majority of our configured linting & formatting settings.
 Normally would not be commited in git repo directly to remain editor-agnostic.
 
-- `pylint` for linting. By default all rules are enabled, and some are selectively disabled as seen in `.pylintrc`. Run via `pylint src`.
+- `pylint` for linting. By default all rules are enabled, and some are selectively disabled as seen in `.pylintrc`. Run via `pylint src` or `python -m pylint src`.
 - `black` for formatting with a line length of 119 characters. To run `black` on `src` folder: `black src --line-length 119`
 - `autoflake` for removing unused imports. To run `autoflake` on `src` folder: `autoflake --remove-all-unused-imports -r -i src`
-- VSCode's inbuilt import sorting (which uses `isort` behind-the-hood).
+- NOTE: VSCode's inbuilt import sorting (which uses `isort` behind-the-hood) agrees with our linting rules.
